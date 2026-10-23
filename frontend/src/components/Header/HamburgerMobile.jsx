@@ -66,11 +66,22 @@ const HamburgerMobile = ({
       <nav className={`mobile-hamburger-container ${mobileMenuShow ? "opened" : ""}`}>
         {/* Mobile Header Bar */}
         <div className="mobile-menu-header">
-          <div className="mobile-menu-brand-wrap">
-            <span className="mobile-gift-icon">
-              <i className="fa-solid fa-gift"></i>
-            </span>
-            <span className="mobile-menu-brand">ATELIER GIFTS</span>
+          <div className="mobile-menu-brand-wrap" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div className="brand-logo-img-wrapper" style={{ width: "36px", height: "36px" }}>
+              <img
+                src="/gifting-wellness-logo.jpg"
+                alt="Gifting Wellness"
+                className="brand-official-logo-img"
+              />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span className="mobile-menu-brand" style={{ fontSize: "16px", fontWeight: "800", letterSpacing: "0.04em", color: "#0f172a" }}>
+                Gifting Wellness
+              </span>
+              <span style={{ fontSize: "8.5px", fontWeight: "700", letterSpacing: "0.12em", color: "#b65c45" }}>
+                CORPORATE GIFTING
+              </span>
+            </div>
           </div>
           <button
             onClick={handleMouseClick}

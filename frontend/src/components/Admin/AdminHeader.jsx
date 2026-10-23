@@ -17,7 +17,7 @@ const AdminHeader = () => {
               <i className="fa-solid fa-gift"></i> {announcement?.badge?.replace(/^[^\w]+/, "") || "Corporate & Festive Gifting"} · Admin
             </span>
             <span className="admin-top-bar-text">
-              Atelier Gifting Admin Suite · Real-time Storefront & Navigation Synchronization
+              Gifting Wellness Admin Suite · Real-time Corporate Solutions & Catalog Sync
             </span>
           </div>
 
@@ -44,12 +44,16 @@ const AdminHeader = () => {
       <div className="admin-nav-bar">
         <div className="container admin-nav-content">
           <div className="admin-nav-left">
-            <Link to="/admin" className="luxury-brand-wordmark gifting-logo" title="Atelier Gifts Admin Suite">
-              <div className="brand-logo-icon">
-                <i className={navigation?.brandLogo?.icon || "fa-solid fa-gift"}></i>
+            <Link to="/admin" className="luxury-brand-wordmark gifting-logo" title="Gifting Wellness Admin Portal">
+              <div className="brand-logo-img-wrapper">
+                <img
+                  src="/gifting-wellness-logo.jpg"
+                  alt="Gifting Wellness"
+                  className="brand-official-logo-img"
+                />
               </div>
               <div className="brand-logo-text-block">
-                <span className="brand-logo-text">{navigation?.brandLogo?.text || "ATELIER"}</span>
+                <span className="brand-logo-text">Gifting Wellness</span>
                 <span className="brand-logo-sub">ADMIN PORTAL</span>
               </div>
             </Link>

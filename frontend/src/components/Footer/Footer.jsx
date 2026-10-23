@@ -11,21 +11,34 @@ const Footer = () => {
         <div className="footer-top-grid">
           {/* Brand Info */}
           <div className="footer-brand-column">
-            <Link to="/" className="footer-brand-logo">
-              <span className="logo-wordmark">ATELIER</span>
-              <span className="logo-subtitle">GIFTS & CO.</span>
+            <Link to="/" className="footer-brand-logo" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}>
+              <div className="brand-logo-img-wrapper" style={{ width: "42px", height: "42px", borderRadius: "50%", overflow: "hidden", border: "1.5px solid rgba(255,255,255,0.2)", background: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img
+                  src="/gifting-wellness-logo.jpg"
+                  alt="Gifting Wellness"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span className="logo-wordmark" style={{ fontSize: "18px", letterSpacing: "0.06em", color: "#f8fafc" }}>Gifting Wellness</span>
+                <span className="logo-subtitle" style={{ fontSize: "9px", letterSpacing: "0.14em", color: "#b65c45" }}>CORPORATE GIFTING SOLUTIONS</span>
+              </div>
             </Link>
             <p className="footer-brand-desc">
-              India's premier corporate and festive gifting specialist. Curating 10,000+ customizable corporate gifts, executive drinkware, tech gadgets, and luxury festive hampers with official GST tax billing and Pan-India doorstep delivery.
+              Founded by Ravi Kinnera in 2019, Gifting Wellness is a new-age corporate gifting solutions company based in Hyderabad, India. Thoughtfully Chosen. Meaningfully Delivered.
             </p>
             <div className="footer-contact-snippet">
               <p>
+                <i className="fa-solid fa-location-dot" style={{ marginRight: "6px", color: "#b65c45" }}></i>
+                Hyderabad, Telangana, India
+              </p>
+              <p>
                 <i className="fa-solid fa-phone" style={{ marginRight: "6px", color: "#b65c45" }}></i>
-                {contactInfo.phonePrimary}
+                {contactInfo?.phonePrimary || "+91 98765 43210"}
               </p>
               <p>
                 <i className="fa-solid fa-envelope" style={{ marginRight: "6px", color: "#b65c45" }}></i>
-                {contactInfo.emailBulk}
+                {contactInfo?.emailBulk || "corporate@giftingwellness.com"}
               </p>
             </div>
             <div className="footer-social-wrapper">
@@ -109,7 +122,7 @@ const Footer = () => {
         {/* Bottom Bar: Copyright & Payment Badges */}
         <div className="footer-bottom-bar">
           <div className="footer-copyright-text">
-            © {new Date().getFullYear()} ATELIER GIFTS & CO. All rights reserved. Bespoke Corporate & Festive Gifting Solutions.
+            © {new Date().getFullYear()} Gifting Wellness. All rights reserved. Corporate Gifting Solutions — Thoughtfully Chosen. Meaningfully Delivered.
           </div>
 
           <div className="footer-payment-methods">
