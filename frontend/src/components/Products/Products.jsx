@@ -37,16 +37,29 @@ const Products = () => {
     return Math.max(2000, Math.ceil(maxVal / 100) * 100);
   }, [products]);
 
-  // Determine if the current products view has items with apparel/standard sizes
-  const hasSizedProducts = useMemo(() => {
-    return products.some((p) => {
-      if (!p.sizes || p.sizes.length === 0) return false;
-      return p.sizes.some((s) => {
-        const norm = normalizeSize(s);
-        return STANDARDIZED_SIZES.includes(norm);
-      });
-    });
-  }, [products]);
+  // Strict clothing check: apparel sizes and dress styles only appear for clothing/apparel categories
+  const isClothingView = useMemo(() => {
+    const cat = (categoryQuery || params.category || "").toLowerCase();
+    const subcat = (subcategoryQuery || "").toLowerCase();
+    const target = `${cat} ${subcat}`;
+    return (
+      cat === "apparels" ||
+      cat === "men's clothing" ||
+      cat === "women's clothing" ||
+      cat === "casual" ||
+      cat === "formal" ||
+      target.includes("clothing") ||
+      target.includes("apparel") ||
+      target.includes("shirt") ||
+      target.includes("t-shirt") ||
+      target.includes("polo") ||
+      target.includes("hoodie") ||
+      target.includes("jacket") ||
+      target.includes("jeans") ||
+      target.includes("dress") ||
+      target.includes("rain coat")
+    );
+  }, [categoryQuery, params.category, subcategoryQuery]);
 
   // Adjust default max if catalog dynamically requires a higher range
   useEffect(() => {
@@ -300,7 +313,10 @@ const Products = () => {
           }}
           clearAllFilters={clearAllFilters}
           catalogMaxPrice={catalogMaxPrice}
-          showSizeFilter={hasSizedProducts}
+          showSizeFilter={isClothingView}
+          showDressStyle={isClothingView}
+          activeCategory={categoryQuery || params.category || ""}
+          appliedSize={appliedSize}
         />
         <div className="products-column">
           <div className="products-heading-flex">
@@ -356,14 +372,10 @@ const Products = () => {
               <button
                 onClick={() => setIsFilterOpen((prevState) => !prevState)}
                 aria-label="open filters"
-                className="btn-search btn-filters-mobile"
+                className="btn-filters-mobile"
+                title="Open filters"
               >
-                <img
-                  src="/filterIconEnabled.png"
-                  width="32"
-                  height="32"
-                  alt="filter"
-                />
+                <i className="fa-solid fa-sliders"></i>
               </button>
               <p className="text--sm text--gray products-number">
                 Showing{" "}

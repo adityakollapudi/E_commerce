@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useWishlist } from "../../context/WishlistContext";
+import { useCart } from "../../context/CartContext";
 import { useSiteContent } from "../../context/SiteContentContext";
 import { GIFTING_CATEGORIES } from "../../data/navigationData";
 
@@ -13,6 +14,7 @@ const HamburgerMobile = ({
 }) => {
   const { user, isAdmin, openAuthModal, logout } = useAuth();
   const { wishlistCount, openWishlist } = useWishlist();
+  const { openCart, totalItems } = useCart();
   const { brands, services, festiveGifts, contactInfo, giftingCategories } = useSiteContent();
   const categories = Array.isArray(giftingCategories) && giftingCategories.length > 0
     ? giftingCategories
@@ -377,11 +379,19 @@ const HamburgerMobile = ({
 
           {/* Cart */}
           <li className="mobile-nav-link-row">
-            <Link to="/cart" onClick={handleNavClick} className="mobile-cart-link">
+            <button
+              type="button"
+              className="mobile-wishlist-trigger"
+              onClick={() => {
+                handleMouseClick();
+                openCart();
+              }}
+            >
               <span>
                 <i className="fa-solid fa-bag-shopping"></i> Shopping Bag
               </span>
-            </Link>
+              {totalItems > 0 && <span className="mobile-badge-count">{totalItems}</span>}
+            </button>
           </li>
 
           {/* Admin link if logged in as admin */}

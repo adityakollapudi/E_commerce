@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Route,
   createBrowserRouter,
@@ -17,6 +17,7 @@ import PageNotFound from "./components/Misc/PageNotFound";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Cart from "./components/Cart/Cart";
+import CartDrawer from "./components/Cart/CartDrawer";
 import UnderConstruction from "./components/Misc/UnderConstruction";
 import AuthModal from "./components/Auth/AuthModal";
 import LoginPage from "./components/Auth/LoginPage";
@@ -27,79 +28,20 @@ import AdminPortNotice from "./components/Admin/AdminPortNotice";
 import ManageSiteContent from "./components/Admin/ManageSiteContent";
 import { WishlistProvider } from "./context/WishlistContext";
 import { SiteContentProvider } from "./context/SiteContentContext";
+import { CartProvider, useCart } from "./context/CartContext";
 import WishlistDrawer from "./components/Wishlist/WishlistDrawer";
 
-function App() {
-  const [cart, setCart] = useState(
-    () => JSON.parse(localStorage.getItem("cart")) ?? []
-  );
-
-  const [toast, setToast] = useState({ visible: false, message: "", title: "" });
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  const showNotification = (title, message) => {
-    setToast({ visible: true, title, message });
-    setTimeout(() => {
-      setToast({ visible: false, title: "", message: "" });
-    }, 3500);
-  };
-
-  const addToCart = (item, quantity, size) => {
-    const itemIdWithSize = `${item.id}-${size}`;
-
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.idWithSize === itemIdWithSize
-    );
-
-    if (existingItemIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex].quantity += quantity || 1;
-      setCart(updatedCart);
-    } else {
-      const newItem = { ...item, quantity, size, idWithSize: itemIdWithSize };
-      setCart([...cart, newItem]);
-    }
-
-    showNotification(
-      "Added to Cart!",
-      `${quantity || 1}x ${item.title} (Size: ${(size || "M").toUpperCase()})`
-    );
-  };
-
-  const decreaseQuantity = (item) => {
-    const itemIdWithSize = `${item.id}-${item.size}`;
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.idWithSize === itemIdWithSize
-    );
-    if (existingItemIndex !== -1 && cart[existingItemIndex].quantity > 1) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex].quantity -= 1;
-      setCart(updatedCart);
-    }
-  };
-
-  const increaseQuantity = (item) => {
-    const itemIdWithSize = `${item.id}-${item.size}`;
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.idWithSize === itemIdWithSize
-    );
-    if (existingItemIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex].quantity += 1;
-      setCart(updatedCart);
-    }
-  };
-
-  const removeFromCart = (itemIdWithSize) => {
-    setCart(cart.filter((item) => item.idWithSize !== itemIdWithSize));
-  };
-
-  const clearCart = () => {
-    setCart([]);
-  };
+function AppContent() {
+  const {
+    cart,
+    addToCart,
+    decreaseQuantity,
+    increaseQuantity,
+    removeFromCart,
+    clearCart,
+    cartToast,
+    setCartToast,
+  } = useCart();
 
   // Detect whether frontend is running on the dedicated Admin Port (5174)
   const isPortalAdmin =
@@ -113,8 +55,8 @@ function App() {
           <Root
             cart={cart}
             removeFromCart={removeFromCart}
-            toast={toast}
-            setToast={setToast}
+            toast={cartToast}
+            setToast={setCartToast}
             isPortalAdmin={isPortalAdmin}
           />
         }
@@ -171,11 +113,9 @@ function App() {
   );
 
   return (
-    <SiteContentProvider>
-      <WishlistProvider onAddToCart={addToCart}>
-        <RouterProvider router={router} />
-      </WishlistProvider>
-    </SiteContentProvider>
+    <WishlistProvider onAddToCart={addToCart}>
+      <RouterProvider router={router} />
+    </WishlistProvider>
   );
 }
 
@@ -190,6 +130,9 @@ function Root({ cart, removeFromCart, toast, setToast, isPortalAdmin }) {
       <Outlet />
       {!isAdminRoute && <Footer />}
 
+      {/* Slide-over Cart Drawer */}
+      <CartDrawer />
+
       {/* Slide-over Wishlist Drawer */}
       <WishlistDrawer />
 
@@ -197,7 +140,7 @@ function Root({ cart, removeFromCart, toast, setToast, isPortalAdmin }) {
       <AuthModal />
 
       {/* Floating Add to Cart Toast */}
-      {toast.visible && (
+      {toast?.visible && (
         <aside aria-label="Notification" className="cart-toast-banner">
           <div className="cart-toast-content">
             <div className="toast-icon">
@@ -227,6 +170,16 @@ function Root({ cart, removeFromCart, toast, setToast, isPortalAdmin }) {
         </aside>
       )}
     </>
+  );
+}
+
+function App() {
+  return (
+    <SiteContentProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </SiteContentProvider>
   );
 }
 

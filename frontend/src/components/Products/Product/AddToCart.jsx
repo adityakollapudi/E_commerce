@@ -25,15 +25,23 @@ const AddToCart = ({
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
+  const requiresSizeSelection =
+    Array.isArray(item?.sizes) &&
+    item.sizes.length > 1 &&
+    item.sizes.some((s) => ["xs", "s", "m", "l", "xl", "xxl"].includes(String(s).trim().toLowerCase()));
+
   const handleAddClick = () => {
-    if (!size || size.length < 1) {
-      handleSizeWarning(true);
+    if (requiresSizeSelection && (!size || size.length < 1 || size === "Standard")) {
+      if (handleSizeWarning) handleSizeWarning(true);
       return;
     }
-    addToCart(item, quantity, size);
+    const finalSize = size || (Array.isArray(item?.sizes) && item.sizes[0]) || "Standard";
+    if (addToCart) {
+      addToCart(item, quantity, finalSize);
+    }
     setIsAdded(true);
     setQuantity(1);
-    clearSize();
+    if (clearSize) clearSize();
     setTimeout(() => {
       setIsAdded(false);
     }, 2000);

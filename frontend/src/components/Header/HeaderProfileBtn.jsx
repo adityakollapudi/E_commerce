@@ -3,16 +3,19 @@ import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useWishlist } from "../../context/WishlistContext";
+import { useCart } from "../../context/CartContext";
 
-const HeaderProfileBtn = ({ cart, handleMouseClick }) => {
+const HeaderProfileBtn = ({ cart: propCart, handleMouseClick }) => {
   const { user, isAdmin, logout, openAuthModal, quickLogin } = useAuth();
   const { wishlistCount, openWishlist } = useWishlist();
+  const { openCart, totalItems, cart: contextCart } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
-  const calculateItemsNumber = () => {
-    return cart.reduce((acc, item) => (acc += item.quantity), 0);
-  };
+  const activeCart = contextCart && contextCart.length > 0 ? contextCart : (propCart || []);
+  const itemCount = typeof totalItems === "number" && totalItems > 0
+    ? totalItems
+    : activeCart.reduce((acc, item) => (acc += item.quantity || 1), 0);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -62,20 +65,21 @@ const HeaderProfileBtn = ({ cart, handleMouseClick }) => {
         )}
       </button>
 
-      {/* Cart Icon */}
-      <Link
-        to="/cart"
+      {/* Cart Icon - opens Slide-over Cart Drawer */}
+      <button
+        type="button"
+        onClick={openCart}
         className="btn-profile header-icon-btn card-item-count-container"
         aria-label="View Shopping Bag"
-        title="Shopping Bag"
+        title="View Shopping Bag"
       >
         <i className="fa-solid fa-bag-shopping" style={{ fontSize: "18px" }}></i>
-        {cart.length > 0 && (
+        {itemCount > 0 && (
           <span className="cart-item-count text--xxs">
-            {calculateItemsNumber()}
+            {itemCount}
           </span>
         )}
-      </Link>
+      </button>
 
       {/* Prominent Customer Login Button when not logged in */}
       {!user && (

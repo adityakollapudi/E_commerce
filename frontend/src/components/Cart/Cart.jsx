@@ -5,8 +5,23 @@ import QuantityControls from "../Products/Product/QuantityControls";
 import { capitalize } from "../Helpers/Helpers";
 import { useAuth } from "../../context/AuthContext";
 
-const Cart = ({ cart, decreaseQuantity, increaseQuantity, removeFromCart, clearCart }) => {
+import { useCart } from "../../context/CartContext";
+
+const Cart = ({
+  cart: propCart,
+  decreaseQuantity: propDecrease,
+  increaseQuantity: propIncrease,
+  removeFromCart: propRemove,
+  clearCart: propClear,
+}) => {
   const { user, token, isLoggedIn, openAuthModal } = useAuth();
+  const contextCart = useCart();
+
+  const cart = (propCart && Array.isArray(propCart)) ? propCart : contextCart.cart;
+  const decreaseQuantity = propDecrease || contextCart.decreaseQuantity;
+  const increaseQuantity = propIncrease || contextCart.increaseQuantity;
+  const removeFromCart = propRemove || contextCart.removeFromCart;
+  const clearCart = propClear || contextCart.clearCart;
 
   const [promoInput, setPromoInput] = useState("");
   const [discountPercent, setDiscountPercent] = useState(20); // Default 20% for demonstration
@@ -45,6 +60,15 @@ const Cart = ({ cart, decreaseQuantity, increaseQuantity, removeFromCart, clearC
       }));
     }
   }, [user]);
+
+  // Open checkout modal automatically if navigated with ?checkout=true
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("checkout") === "true" && cart && cart.length > 0) {
+      setIsCheckoutOpen(true);
+      setCheckoutStep("form");
+    }
+  }, [cart]);
 
   const calculateSubtotal = () => {
     return cart.reduce((acc, item) => acc + Number(item.price) * item.quantity, 0);

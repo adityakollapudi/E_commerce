@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import StarRating from "../Reviews/StarRating";
 import { useWishlist } from "../../../context/WishlistContext";
+import { useCart } from "../../../context/CartContext";
 
 const CategoryProduct = ({
   id,
@@ -19,7 +20,8 @@ const CategoryProduct = ({
   sizes,
   isNew,
 }) => {
-  const { isInWishlist, toggleWishlist, addToCart } = useWishlist();
+  const { isInWishlist, toggleWishlist } = useWishlist();
+  const { addToCart } = useCart();
   const [showSizePicker, setShowSizePicker] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
