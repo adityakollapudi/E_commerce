@@ -5,7 +5,12 @@ import { useAuth } from "../../context/AuthContext";
 import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
 
-const HeaderProfileBtn = ({ cart: propCart, handleMouseClick }) => {
+const HeaderProfileBtn = ({
+  cart: propCart,
+  handleMouseClick,
+  onOpenBulkModal,
+  onOpenCatalogueModal,
+}) => {
   const { user, isAdmin, logout, openAuthModal, quickLogin } = useAuth();
   const { wishlistCount, openWishlist } = useWishlist();
   const { openCart, totalItems, cart: contextCart } = useCart();
@@ -48,6 +53,32 @@ const HeaderProfileBtn = ({ cart: propCart, handleMouseClick }) => {
       </button>
 
       <SearchBar />
+
+      {/* Quick Action: Download Catalogues */}
+      {onOpenCatalogueModal && (
+        <button
+          type="button"
+          onClick={onOpenCatalogueModal}
+          className="btn-header-action btn-header-catalogues"
+          title="Download Official Corporate Catalogues"
+        >
+          <i className="fa-solid fa-file-arrow-down"></i>
+          <span className="header-action-label">Catalogues</span>
+        </button>
+      )}
+
+      {/* Quick Action: Enquiry for Bulk Orders */}
+      {onOpenBulkModal && (
+        <button
+          type="button"
+          onClick={() => onOpenBulkModal()}
+          className="btn-header-action btn-header-bulk"
+          title="Enquiry for Bulk Corporate Orders"
+        >
+          <i className="fa-solid fa-paper-plane"></i>
+          <span className="header-action-label">Bulk Enquiry</span>
+        </button>
+      )}
 
       {/* Wishlist Icon */}
       <button

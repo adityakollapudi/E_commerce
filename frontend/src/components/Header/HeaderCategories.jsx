@@ -233,42 +233,6 @@ const HeaderCategories = ({ onOpenBulkModal, onOpenCatalogueModal }) => {
             </li>
           );
         })}
-
-        {/* 8. Download Catalogues Button */}
-        {downloadAction?.enabled !== false && (
-          <li className="nav-item nav-item-action">
-            <button
-              type="button"
-              onClick={() => {
-                closeMenu();
-                if (onOpenCatalogueModal) onOpenCatalogueModal();
-              }}
-              className="nav-action-btn btn-catalogues"
-              title={downloadAction?.label || "Download Catalogues"}
-            >
-              <i className={downloadAction?.icon || "fa-solid fa-file-arrow-down"}></i>
-              <span>{downloadAction?.label || "Download Catalogues"}</span>
-            </button>
-          </li>
-        )}
-
-        {/* 9. Enquiry for Bulk Orders (Login/Signup) CTA */}
-        {bulkAction?.enabled !== false && (
-          <li className="nav-item nav-item-action">
-            <button
-              type="button"
-              onClick={() => {
-                closeMenu();
-                if (onOpenBulkModal) onOpenBulkModal();
-              }}
-              className="nav-action-btn btn-bulk-nav-cta"
-              title={bulkAction?.label || "Enquiry for Bulk Orders"}
-            >
-              <i className={bulkAction?.icon || "fa-solid fa-paper-plane"}></i>
-              <span>{bulkAction?.label || "Enquiry for Bulk Orders"}</span>
-            </button>
-          </li>
-        )}
       </ul>
     </nav>
   );

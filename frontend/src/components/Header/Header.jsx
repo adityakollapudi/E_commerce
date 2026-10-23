@@ -128,60 +128,82 @@ const Header = ({ cart, removeFromCart }) => {
 
       {/* Sticky Main Header */}
       <header className={`header-bg sticky-luxury-header gifting-header ${isScrolled ? "is-scrolled" : ""}`}>
-        <div className="container flex-header header gifting-header-container">
-          {/* Brand Logo & Mobile Hamburger Trigger */}
-          <div className="flex-title gifting-brand-wrapper">
-            <button
-              onClick={() => handleMouseClick(setMobileMenuShow)}
-              className="btn-profile btn-search btn-hamburger"
-              aria-label="Open mobile menu"
-            >
-              <i className="fa-solid fa-bars" style={{ fontSize: "18px" }}></i>
-            </button>
+        {/* Tier 1: Brand Logo, Autocomplete Search, CTAs & Shopping Controls */}
+        <div className="header-primary-tier">
+          <div className="container header-primary-container">
+            {/* Brand Logo & Mobile Hamburger Trigger */}
+            <div className="flex-title gifting-brand-wrapper">
+              <button
+                onClick={() => handleMouseClick(setMobileMenuShow)}
+                className="btn-profile btn-search btn-hamburger"
+                aria-label="Open mobile menu"
+              >
+                <i className="fa-solid fa-bars" style={{ fontSize: "18px" }}></i>
+              </button>
 
-            <Link to="/" className="luxury-brand-wordmark gifting-logo" aria-label="Gifting Wellness Home">
-              <div className="brand-logo-img-wrapper">
-                <img
-                  src="/gifting-wellness-logo.jpg"
-                  alt="Gifting Wellness"
-                  className="brand-official-logo-img"
-                />
-              </div>
-              <div className="brand-logo-text-block">
-                <span className="brand-logo-text">Gifting Wellness</span>
-                <span className="brand-logo-sub">CORPORATE GIFTING SOLUTIONS</span>
-              </div>
-            </Link>
+              <Link to="/" className="luxury-brand-wordmark gifting-logo" aria-label="Gifting Wellness Home">
+                <div className="brand-logo-img-wrapper">
+                  <img
+                    src="/gifting-wellness-logo.jpg"
+                    alt="Gifting Wellness"
+                    className="brand-official-logo-img"
+                  />
+                </div>
+                <div className="brand-logo-text-block">
+                  <span className="brand-logo-text">Gifting Wellness</span>
+                  <span className="brand-logo-sub">CORPORATE GIFTING SOLUTIONS</span>
+                </div>
+              </Link>
+            </div>
+
+            {/* Right Header Controls: Search, Saved Items, Cart, Account, Action Buttons */}
+            <HeaderProfileBtn
+              handleMouseClick={() => handleMouseClick(setMobileSearchShow)}
+              cart={cart}
+              removeFromCart={removeFromCart}
+              onOpenBulkModal={handleOpenBulkModal}
+              onOpenCatalogueModal={handleOpenCatalogueModal}
+            />
           </div>
-
-          {/* Main Desktop Navigation Items */}
-          <HeaderCategories
-            onOpenBulkModal={handleOpenBulkModal}
-            onOpenCatalogueModal={handleOpenCatalogueModal}
-          />
-
-          {/* Right Header Controls: Search, Saved Items, Cart, Account */}
-          <HeaderProfileBtn
-            handleMouseClick={() => handleMouseClick(setMobileSearchShow)}
-            cart={cart}
-            removeFromCart={removeFromCart}
-            onOpenBulkModal={handleOpenBulkModal}
-          />
-
-          {/* Mobile Search Overlay */}
-          <SearchMobile
-            mobileSearchShow={mobileSearchShow}
-            handleMouseClick={() => handleMouseClick(setMobileSearchShow)}
-          />
-
-          {/* Mobile Drawer Navigation */}
-          <HamburgerMobile
-            handleMouseClick={() => handleMouseClick(setMobileMenuShow)}
-            mobileMenuShow={mobileMenuShow}
-            onOpenBulkModal={handleOpenBulkModal}
-            onOpenCatalogueModal={handleOpenCatalogueModal}
-          />
         </div>
+
+        {/* Tier 2: Category Navigation Strip */}
+        <div className="header-nav-tier">
+          <div className="container header-nav-tier-container">
+            {/* Main Desktop Navigation Items */}
+            <HeaderCategories
+              onOpenBulkModal={handleOpenBulkModal}
+              onOpenCatalogueModal={handleOpenCatalogueModal}
+            />
+
+            {/* Corporate Quick Reassurance Strip on Desktop */}
+            <div className="header-corporate-trust-strip">
+              <span className="trust-pill-item">
+                <i className="fa-solid fa-shield-halved text--forest"></i> Official GST Invoicing
+              </span>
+              <span className="trust-pill-item">
+                <i className="fa-solid fa-truck-fast text--forest"></i> Pan-India Dispatch
+              </span>
+              <span className="trust-pill-item">
+                <i className="fa-solid fa-hand-holding-heart text--terracotta"></i> Hyderabad HQ
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Search Overlay */}
+        <SearchMobile
+          mobileSearchShow={mobileSearchShow}
+          handleMouseClick={() => handleMouseClick(setMobileSearchShow)}
+        />
+
+        {/* Mobile Drawer Navigation */}
+        <HamburgerMobile
+          handleMouseClick={() => handleMouseClick(setMobileMenuShow)}
+          mobileMenuShow={mobileMenuShow}
+          onOpenBulkModal={handleOpenBulkModal}
+          onOpenCatalogueModal={handleOpenCatalogueModal}
+        />
       </header>
 
       {/* Bulk Order Enquiry Modal with Login/Signup */}
