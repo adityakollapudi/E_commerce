@@ -19,8 +19,14 @@ const Home = () => {
       {/* 02: Trust & Value Strip - Logo Branding, B2B GST, Pan-India Logistics, Volume Pricing */}
       <TrustValueStrip />
 
-      {/* 03: Four Bespoke Services - Corporate, Employee, Return, Event Gifting */}
-      <GiftingServicesSection />
+      {/* 03: New Season Gifting Arrivals - Promoted to top of page */}
+      <section className="home-new-arrivals-section" aria-label="New Gifting Arrivals">
+        <HomeCategory
+          title="New Season Gifting Arrivals"
+          subtitle="Innovative tech gadgets, insulated drinkware, and sustainable gift sets recently added."
+          filterType="newArrival"
+        />
+      </section>
 
       {/* 04: Core Gifting Categories - Drinkware, Bags, Tech, Festive */}
       <FeaturedCategories />
@@ -34,29 +40,23 @@ const Home = () => {
         />
       </section>
 
-      {/* 06: Authorized 22+ Corporate Brand Partners */}
-      <BrandedGiftingShowcase />
+      {/* 06: Four Bespoke Services - Corporate, Employee, Return, Event Gifting */}
+      <GiftingServicesSection />
 
-      {/* 07: Why 500+ Corporate Brands Partner With Atelier Gifting */}
-      <BrandStorySection />
+      {/* 07: Authorized 22+ Corporate Brand Partners */}
+      <BrandedGiftingShowcase />
 
       {/* 08: Seasonal & Festive Gifting Campaign Banner */}
       <PromotionalBanner />
 
-      {/* 09: New Season Gifting Arrivals */}
-      <section className="home-new-arrivals-section" aria-label="New Gifting Arrivals">
-        <HomeCategory
-          title="New Season Gifting Arrivals"
-          subtitle="Innovative tech gadgets, insulated drinkware, and sustainable gift sets recently added."
-          filterType="newArrival"
-        />
-      </section>
+      {/* 09: About Us - Gifting Wellness Brand Story, Founder Ravi Kinnera, Mission & Vision (Bottom of page) */}
+      <BrandStorySection />
 
-      {/* 10: Enterprise Assurance & Corporate Policies */}
-      <ShoppingReassurance />
-
-      {/* 11: Verified Client Reflections & Testimonials */}
+      {/* 10: Verified Client Reflections & Testimonials */}
       <CustomerTestimonials />
+
+      {/* 11: Enterprise Assurance & Corporate Policies */}
+      <ShoppingReassurance />
 
       {/* 12: Corporate Lookbook 2026 Subscription */}
       <NewsletterSection />
