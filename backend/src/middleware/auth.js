@@ -4,9 +4,9 @@ import { findUserById } from "../data/users.js";
 
 dotenv.config();
 
-// Enforces secure JWT Secret retrieval with zero insecure fallbacks
+// Enforces secure JWT Secret retrieval with development fallback
 export const getJwtSecret = () => {
-  const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET || "gddAGHghghrsdASGfffg$^Z^899866thbghh_dev_default_key";
   if (!secret || typeof secret !== "string" || secret.trim().length === 0) {
     throw new Error(
       "FATAL: Missing JWT_SECRET environment variable. Backend cannot start securely without a configured JWT secret."
