@@ -89,7 +89,7 @@ const HeaderCategories = ({ onOpenBulkModal, onOpenCatalogueModal }) => {
             return (
               <li
                 key={item.id}
-                className={`nav-item dropdown-parent ${activeMenu === "services" ? "is-active" : ""}`}
+                className={`nav-item dropdown-parent mega-parent ${activeMenu === "services" ? "is-active" : ""}`}
                 onMouseEnter={() => handleMouseEnter("services")}
                 onMouseLeave={handleMouseLeave}
               >
@@ -146,7 +146,7 @@ const HeaderCategories = ({ onOpenBulkModal, onOpenCatalogueModal }) => {
             return (
               <li
                 key={item.id}
-                className={`nav-item dropdown-parent ${activeMenu === "branded" ? "is-active" : ""}`}
+                className={`nav-item dropdown-parent mega-parent ${activeMenu === "branded" ? "is-active" : ""}`}
                 onMouseEnter={() => handleMouseEnter("branded")}
                 onMouseLeave={handleMouseLeave}
               >
@@ -172,7 +172,7 @@ const HeaderCategories = ({ onOpenBulkModal, onOpenCatalogueModal }) => {
             return (
               <li
                 key={item.id}
-                className={`nav-item dropdown-parent ${activeMenu === "festive" ? "is-active" : ""}`}
+                className={`nav-item dropdown-parent mega-parent ${activeMenu === "festive" ? "is-active" : ""}`}
                 onMouseEnter={() => handleMouseEnter("festive")}
                 onMouseLeave={handleMouseLeave}
               >
@@ -200,7 +200,7 @@ const HeaderCategories = ({ onOpenBulkModal, onOpenCatalogueModal }) => {
             return (
               <li
                 key={item.id}
-                className={`nav-item dropdown-parent ${activeMenu === "contact" ? "is-active" : ""}`}
+                className={`nav-item dropdown-parent mega-parent ${activeMenu === "contact" ? "is-active" : ""}`}
                 onMouseEnter={() => handleMouseEnter("contact")}
                 onMouseLeave={handleMouseLeave}
               >
