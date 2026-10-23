@@ -31,8 +31,8 @@
 
 .luxury-brand-wordmark {
   display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
   color: var(--text-primary, #1c1c1c);
   cursor: pointer;
